@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+   <script defer src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="join__meeing">
+        <div class="meeting-form">
+          <label>Enter your Meeting ID here :</label>
+          <input
+            id="meeting-number"
+            type="text"
+            required
+          />
+          <label>Enter your Name </label>
+          <input
+            id="name"
+            type="text"
+            required
+          />
+        </div>
+        <a href="">
+          <button
+            class="btn btn-danger mt-2"
+            type="button"
+            onclick="joinMeeting()">
+            Join
+          </button>
+        </a>
+      </div>
+      <div class="create__meeting mx-auto">
+        <a href="/room" id="meeting-href">
+          <button class="btn btn-success">
+            Create new Meeting
+            <i class="fa fa-plus ml-3 mr-0" aria-hidden="true"></i>
+          </button>
+        </a>
+      </div>
+    </div>
+
+    <script>
+      const joinMeeting = () => {
+        event.preventDefault();
+        var meetingId = $("#meeting-number").val();
+        const username = $("#name").val();
+
+        if (meetingId) {
+          url = `http://localhost:3030/${meetingId}`;
+          const socket = io('/');
+          if (username) {
+            socket.emit('username', username);
+        window.location = url;
+          } else {
+            alert("username is required")
+          }
+        
+        }else{
+          alert("meeting id is required")
+        }
+        
+        
+      };
+    </script>
+</body>
+</html>
